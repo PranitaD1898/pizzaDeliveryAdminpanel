@@ -1,1 +1,56 @@
-<p>customers works!</p>
+<div class="customer-container">
+    <div class="header-flex">
+      <div class="title-group">
+        <h1>Customer Database</h1>
+        <p>Manage your registered pizza enthusiasts</p>
+      </div>
+      <div class="badge-total">
+        {{ customers.length }} Active Users
+      </div>
+    </div>
+  
+    <div class="card-table-wrapper">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Contact</th>
+            <th>Delivery Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (isLoading) {
+            <tr>
+              <td colspan="5" class="status-msg">Loading records...</td>
+            </tr>
+          } @else {
+            @for (user of customers; track user._id) {
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-icon">{{ user.customerName[0] | uppercase }}</div>
+                    <div>
+                      <div class="user-name">{{ user.customerName }}</div>
+                      <div class="user-id">ID: {{ user._id | slice:-6 }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="contact-info">
+                    <span>📱 {{ user.mobileNumber || user.customerMobilenum }}</span>
+                  </div>
+                </td>
+                <td>
+                  <p class="address-box">{{ user.address || 'No address saved' }}</p>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="status-msg">No customers found in the database.</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>

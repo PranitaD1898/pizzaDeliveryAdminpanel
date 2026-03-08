@@ -1,1 +1,75 @@
-<p>orders works!</p>
+<div class="dashboard-wrapper">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Total Orders</span>
+        <span class="stat-value">{{ allOrders.length }}</span>
+      </div>
+      <div class="stat-card warning">
+        <span class="stat-label">Active Kitchen</span>
+        <span class="stat-value">{{ getActiveCount() }}</span>
+      </div>
+    </div>
+  
+    <div class="header-section">
+      <h1><i class="pizza-icon">🍕</i> Order Management</h1>
+      <button class="refresh-btn" (click)="loadOrders()">Refresh List</button>
+    </div>
+  
+    <div class="table-container">
+      <table class="pizza-admin-table">
+        <thead>
+          <tr>
+            <th>Order Info</th>
+            <th>Customer Details</th>
+            <th>Pizza Items</th>
+            <th>Total Bill</th>
+            <th>Current Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of allOrders; track order._id) {
+            <tr [class.new-order]="order.orderStatus === 'placed'">
+              <td>
+                <span class="order-id">#{{ order._id | slice:-6 }}</span>
+                <small class="order-time">Recent</small>
+              </td>
+              <td>
+                <div class="cust-name">{{ order.customerName }}</div>
+                <div class="cust-phone">📞 {{ order.customerMobilenum }}</div>
+              </td>
+              <td>
+                <div class="item-stack">
+                  @for (item of order.itemList; track $index) {
+                    <span class="pizza-tag">
+                      {{ item.pizzaName }} <span class="qty">x{{ item.quantity }}</span>
+                    </span>
+                  }
+                </div>
+              </td>
+              <td class="price-cell">₹{{ order.cartValue }}</td>
+              <td>
+                <div class="status-pill {{ order.orderStatus }}">
+                  {{ order.orderStatus.replace('_', ' ') }}
+                </div>
+              </td>
+              <td>
+                <div class="action-wrapper">
+                  <select #statusSelect (change)="changeStatus(order._id, statusSelect.value)">
+                    <option value="" disabled selected>Move to...</option>
+                    @for (status of statusOptions; track status) {
+                      <option [value]="status">{{ status.replace('_', ' ') }}</option>
+                    }
+                  </select>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty-state">No orders in the oven!</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>

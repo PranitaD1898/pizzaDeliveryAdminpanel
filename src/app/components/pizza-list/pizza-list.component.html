@@ -6,7 +6,7 @@
   
     <div class="pizza-grid">
       <div class="pizza-card" *ngFor="let pizza of pizzas">
-        <img [src]="pizza.imageUrl || 'https://placehold.co/400x300?text=No+Image'" class="pizza-img">
+        <img [src]="pizza.imageUrl" class="pizza-img">
         
         <div class="pizza-info">
           <span class="type-badge" [ngClass]="pizza.mealType">
@@ -67,7 +67,7 @@
   
           <div class="form-group">
             <label for="pUrl">Image URL</label>
-            <input type="text" id="pUrl" [(ngModel)]="currentPizza.imageUrl" name="imageUrl" placeholder="https://image-path.jpg">
+            <input type="text" id="pUrl" [(ngModel)]="currentPizza.imageUrl" name="imageUrl">
           </div>
   
           <div class="modal-footer">
