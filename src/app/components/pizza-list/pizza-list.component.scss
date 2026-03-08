@@ -1,0 +1,101 @@
+$primary-color: #ff6347; // Tomato
+$success-color: #27ae60; // Green
+$cancel-color: #636e72; // Gray
+$danger-color: #e74c3c; // Red
+$bg-color: #f1f2f6;
+
+.pizza-page-container {
+  padding: 30px;
+  background-color: $bg-color;
+  min-height: 100vh;
+
+  .header {
+    margin-bottom: 30px;
+    h1 { color: #2d3436; margin: 0; }
+    p { color: #636e72; }
+  }
+}
+
+// Card Styling
+.pizza-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.pizza-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+
+  &:hover { transform: translateY(-5px); }
+
+  .pizza-img { width: 100%; height: 180px; object-fit: cover; }
+
+  .pizza-info {
+    padding: 20px;
+    .type-badge {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: bold;
+      &.veg { background: #dff9fb; color: #0984e3; }
+      &.nonveg { background: #fab1a0; color: #d63031; }
+    }
+    h3 { margin: 10px 0; color: #2d3436; }
+    .price { font-size: 20px; font-weight: bold; color: $primary-color; }
+  }
+
+  .card-actions {
+    display: flex; border-top: 1px solid #f1f2f6;
+    button { 
+      flex: 1; padding: 12px; border: none; cursor: pointer; font-weight: bold; 
+      &.btn-edit-card { background: white; color: $cancel-color; }
+      &.btn-delete-card { background: white; color: $danger-color; border-left: 1px solid #f1f2f6; }
+      &:hover { background: #f9f9f9; }
+    }
+  }
+}
+
+// Floating Button
+.fab-add {
+  position: fixed; bottom: 40px; right: 40px;
+  background: $primary-color; color: white;
+  border: none; padding: 15px 30px; border-radius: 50px;
+  font-size: 16px; font-weight: bold; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 99, 71, 0.4);
+  z-index: 10;
+  transition: all 0.2s;
+
+  &:hover { transform: scale(1.05); background: darken($primary-color, 5%); }
+}
+
+// Modal
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+
+.modal-content {
+  background: white; padding: 35px; border-radius: 20px; width: 100%; max-width: 480px;
+  .modal-header { margin-bottom: 25px; h2 { margin: 0; } }
+}
+
+.form-group {
+  margin-bottom: 18px; display: flex; flex-direction: column;
+  label { font-weight: 600; margin-bottom: 8px; color: #2d3436; }
+  input, select { 
+    padding: 12px; border-radius: 8px; border: 1.5px solid #dfe6e9; 
+    &:focus { border-color: $primary-color; outline: none; }
+  }
+}
+
+.form-row { display: flex; gap: 15px; .form-group { flex: 1; } }
+
+.modal-footer {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 30px;
+  button { 
+    padding: 12px 25px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer;
+    &.btn-cancel { background: #f1f2f6; color: $cancel-color; }
+    &.btn-save { background: $success-color; color: white; }
+  }
+}

@@ -1,0 +1,84 @@
+// Variables for easy branding
+$pizza-primary: #ff6347; // Tomato Red
+$pizza-secondary: #ffb948; // Crust Gold
+$bg-light: #f8f9fa;
+$text-dark: #2d3436;
+
+.dashboard-container {
+  padding: 50px 20px;
+  background-color: $bg-light;
+  min-height: 100vh;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    color: $text-dark;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    color: #636e72;
+    margin-bottom: 50px;
+    display: block;
+  }
+}
+
+.card-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 20px;
+  width: 280px;
+  border: 2px solid transparent;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  // Nesting in SCSS
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: $pizza-primary;
+
+    .icon {
+      transform: scale(1.1);
+      filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+    }
+
+    h3 {
+      color: $pizza-primary;
+    }
+  }
+
+  .icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  h3 {
+    margin: 10px 0;
+    font-size: 1.4rem;
+    color: $text-dark;
+    font-weight: 600;
+  }
+
+  p {
+    color: #b2bec3;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+}

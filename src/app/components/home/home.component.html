@@ -1,0 +1,24 @@
+<div class="dashboard-container">
+    <h1>Pizza Delivery Admin</h1>
+    <span class="subtitle">Welcome back! Select a module to manage your store.</span>
+    
+    <div class="card-grid">
+      <div class="admin-card" [routerLink]="['/pizzas']">
+        <div class="icon">🍕</div>
+        <h3>Pizza List</h3>
+        <p>Add, edit, or remove pizzas from the menu.</p>
+      </div>
+  
+      <div class="admin-card" [routerLink]="['/customers']">
+        <div class="icon">👥</div>
+        <h3>Customer List</h3>
+        <p>Manage user accounts and view profiles.</p>
+      </div>
+  
+      <div class="admin-card" [routerLink]="['/orders']">
+        <div class="icon">📋</div>
+        <h3>Order List</h3>
+        <p>Check active orders and update delivery status.</p>
+      </div>
+    </div>
+  </div>

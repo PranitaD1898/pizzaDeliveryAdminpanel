@@ -1,0 +1,82 @@
+<div class="pizza-page-container">
+    <div class="header">
+      <h1>Pizza Menu Management</h1>
+      <p>View and manage all pizzas available in your store.</p>
+    </div>
+  
+    <div class="pizza-grid">
+      <div class="pizza-card" *ngFor="let pizza of pizzas">
+        <img [src]="pizza.imageUrl || 'https://placehold.co/400x300?text=No+Image'" class="pizza-img">
+        
+        <div class="pizza-info">
+          <span class="type-badge" [ngClass]="pizza.mealType">
+            {{ pizza.mealType | uppercase }}
+          </span>
+          <h3>{{ pizza.pizzaName }}</h3>
+          <p class="details">Size: <strong>{{ pizza.size }}</strong></p>
+          <p class="price">₹{{ pizza.pizzaPrice }}</p>
+        </div>
+  
+        <div class="card-actions">
+          <button class="btn-edit-card" (click)="openModal(pizza)">Edit</button>
+          <button class="btn-delete-card" (click)="deletePizza(pizza._id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  
+    <button class="fab-add" (click)="openModal()">
+      <span class="plus-icon">+</span> Add New Pizza
+    </button>
+  
+    <div class="modal-overlay" *ngIf="isModalOpen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>{{ editMode ? 'Edit Pizza' : 'Create New Pizza' }}</h2>
+          <p>Enter the details below to update the menu.</p>
+        </div>
+  
+        <form (ngSubmit)="savePizza()">
+          <div class="form-group">
+            <label for="pName">Pizza Name</label>
+            <input type="text" id="pName" [(ngModel)]="currentPizza.pizzaName" name="pizzaName" placeholder="e.g. Farmhouse Special" required>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pPrice">Price (₹)</label>
+              <input type="number" id="pPrice" [(ngModel)]="currentPizza.pizzaPrice" name="pizzaPrice" placeholder="299" required>
+            </div>
+  
+            <div class="form-group">
+              <label for="pSize">Size</label>
+              <select id="pSize" [(ngModel)]="currentPizza.size" name="size">
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="pType">Meal Type</label>
+            <select id="pType" [(ngModel)]="currentPizza.mealType" name="mealType">
+              <option value="veg">Veg</option>
+              <option value="nonveg">Non-Veg</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="pUrl">Image URL</label>
+            <input type="text" id="pUrl" [(ngModel)]="currentPizza.imageUrl" name="imageUrl" placeholder="https://image-path.jpg">
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn-save">
+              {{ editMode ? 'Update Changes' : 'Save Pizza' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
