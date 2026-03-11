@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PizzaDetailsService } from '../../services/pizza-details.service';
+import { SupabaseService } from '../../services/supabase.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-pizza-list',
@@ -24,7 +26,15 @@ export class PizzaListComponent {
     mealType: 'veg'
 
   };
-  constructor(public pizzaService : PizzaDetailsService){
+  selectedFile: File | null = null;
+  existingImageUrl: string = '';
+  previewUrl: string = '';
+  isUploading: boolean = false;
+  itemName: string = '';
+  constructor(public pizzaService : PizzaDetailsService,
+    private supabaseService: SupabaseService,
+    private http: HttpClient
+  ){
     
   }
 
@@ -66,9 +76,26 @@ export class PizzaListComponent {
 
   closeModal() { this.isModalOpen = false; }
 
-  savePizza() {
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e: any) => this.previewUrl = e.target.result;
+    reader.readAsDataURL(this.selectedFile!);
+  }
+
+  async savePizza() {
     if (this.editMode) {
+      let imageUrl = this.existingImageUrl; // default to existing
+
+      // Only upload if new image was selected
+      if (this.selectedFile) {
+        imageUrl = await this.supabaseService.uploadImage(this.selectedFile);
+      }
+      // this.isUploading = true;
       // This calls your /updatePizzadetails route
+      this.currentPizza.imageUrl = imageUrl;
       this.pizzaService.updatePizza(this.currentPizza).subscribe({
         next: (res) => {
           this.loadPizzas();

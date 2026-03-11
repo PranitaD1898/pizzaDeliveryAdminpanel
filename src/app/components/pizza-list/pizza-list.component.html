@@ -67,7 +67,22 @@
   
           <div class="form-group">
             <label for="pUrl">Image URL</label>
-            <input type="text" id="pUrl" [(ngModel)]="currentPizza.imageUrl" name="imageUrl">
+            <img *ngIf="existingImageUrl && !previewUrl" 
+            [src]="existingImageUrl" 
+            width="200" height="200"
+            style="object-fit: cover; border-radius: 8px;" />
+       
+       <!-- Show preview of newly selected image -->
+       <img *ngIf="previewUrl" 
+            [src]="previewUrl" 
+            width="200" height="200"
+            style="object-fit: cover; border-radius: 8px;" />
+       
+       <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+       <p *ngIf="existingImageUrl && !previewUrl">
+         ✅ Current image loaded — select new file to change it
+       </p>
+            <!-- <input type="text" id="pUrl" [(ngModel)]="currentPizza.imageUrl" name="imageUrl"> -->
           </div>
   
           <div class="modal-footer">
